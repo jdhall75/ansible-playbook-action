@@ -9,9 +9,9 @@ inputs:
     description: 'Ansible inventory as a YAML text block'
     required: false
     default: |
-      all:
-        hosts:
-          localhost
+      "all:
+         hosts:
+           localhost"
   inventory_github:
     description: 'Ansible inventory in a github repository'
     required: false
