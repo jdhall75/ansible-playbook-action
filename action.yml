@@ -1,11 +1,33 @@
 # action.yml
 name: 'Hello World'
 description: 'Greet someone and record the time'
+branding:
+  color: red
+  icon: compass
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  inventory_inline:  # id of input
+    description: 'Ansible inventory as a YAML text block'
+    required: false
+    default: |
+      all:
+        hosts:
+          localhost
+  inventory_github:
+    description: 'Ansible inventory in a github repository'
+    required: false
+  playbook:
+    description: 'Ansible playbook to run'
     required: true
-    default: 'World'
+    default: "playbook.yml"
+  vault_pass:
+    description: Ansible vault password to descrypt vaulted files and strings
+    required: false
+  ssh_key:
+    description: "SSH private key for accessing remote hosts"
+    required: false
+  options:
+    description: "Extra options to pass to the ansible-playbook command"
+    required: false
 outputs:
   time: # id of output
     description: 'The time we greeted you'
@@ -13,4 +35,9 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.inventory_inline }}
+    - ${{ inputs.inventory_github }}
+    - ${{ inputs.playbook }}
+    - ${{ inputs.vault_pass }}
+    - ${{ inputs.ssh_key }}
+    - ${{ inputs.options }}
